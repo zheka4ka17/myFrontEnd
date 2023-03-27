@@ -1,0 +1,73 @@
+<!DOCTYPE HTML>
+<html>
+<head>
+  <meta charset="utf-8">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="
+https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.min.css
+">
+<script src="
+https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.4/jquery.min.js
+"></script>
+  <script src="density.js"></script> 
+</head>
+<body> 
+<div class="container">
+    <form id="form">
+        <fieldset>
+            <legend>Исходные данные:</legend>
+            <p><label for="length">Длина a</label><input type="text" id="length" placeholder="Длина, мм"></p>
+            <p><label for="width">Ширина b</label><input type="text" id="width" placeholder="Ширина, мм"></p>
+            <p><label for="height">Высота c</label><input type="text" id="height" placeholder="Высота, мм"></p>
+            <p><label for="material">Материал:</label><select id="material"></select></p>
+            <p><label for="density">Плотность &rho;&nbsp;</label><input type="text" id="density"
+                    placeholder="Плотность, г/мм^3"></p>
+        </fieldset>
+        <fieldset>
+            <legend>Результаты расчета:</legend>
+            <p><label for="volume">Объем V</label><input type="text" id="volume" placeholder="Объем, мм^3" disabled>
+            </p>
+            <p><label for="mass">Масса m</label><input type="text" id="mass" placeholder="Масса, г" disabled></p>
+        </fieldset>
+        <button id="form-submit" type="button">Расчет</button>
+    </form>
+</div>
+<div>
+<img src="images.png">
+</div> 
+<script>
+    getDensities();
+
+    function getDensities() {            
+        $("#material").append($("<option>").html("Выберите материал"));
+        density.sort();
+        
+//console.log
+(density);
+        for(i=0; i<density.length; i++){
+            option = $("<option>").html(density[i][0]); 
+            $("#material").append(option);
+        }
+    }
+    getDensities();
+    $("#material").change(function(){
+        let index = $("#material").prop("selectedIndex")-1;
+        $('#density').val(density[index][1]/1e+6);
+
+    }); 
+    
+    function calc(){
+//var l = document.forms["form"].elements["length"].value;
+var l = $("#length").val();
+var w = $("#width").val(); 
+var h = $("#height").val(); 
+
+var ro = document.forms["form"].elements["density"].value;
+$("#volume").val(l*w*h) ;
+
+document.forms["form"].elements["mass"].value = l*w*h*ro;
+return false;
+}; 
+
+    
+</script> 
